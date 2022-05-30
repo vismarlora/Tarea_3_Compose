@@ -35,11 +35,16 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MyApp() {
+    ConsultaScreen()
+}
+
+@Composable
+fun ConsultaScreen(){
     Column(modifier = Modifier.padding(8.dp)) {
 
-    Button(onClick = { /*TODO*/ }) {
-    Text("Nuevo")
-    }
+        Button(onClick = { /*TODO*/ }) {
+            Text("Nuevo")
+        }
         val lista = listOf("Vismar", "Nachely", "Kelvin")
 
         LazyColumn(modifier = Modifier.fillMaxWidth()){
