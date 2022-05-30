@@ -6,10 +6,10 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,8 +35,31 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MyApp() {
-    ConsultaScreen()
+    RegistroScreen()
 }
+
+@Composable
+fun RegistroScreen(){
+    Column(modifier = Modifier.padding(8.dp)){
+        OutlinedTextField(
+            label = {
+                    Text(text = "Ocupacion")
+            },
+            leadingIcon = {
+                          Icon(imageVector = Icons.Default.Person, contentDescription = null)
+            },
+            value = "",
+            onValueChange = {},
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        OutlinedButton(onClick = { /*TODO*/ }) {
+            Text(text = "Guardar")
+        }
+    }
+}
+
+
 
 @Composable
 fun ConsultaScreen(){
