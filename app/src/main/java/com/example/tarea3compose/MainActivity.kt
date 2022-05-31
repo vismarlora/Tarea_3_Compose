@@ -8,8 +8,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.*
@@ -21,6 +19,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.tarea3compose.ui.theme.Tarea3ComposeTheme
+import com.example.tarea3compose.util.Screen
+import androidx.compose.material.Icon
+import androidx.compose.material.icons.filled.*
+import androidx.compose.ui.modifier.modifierLocalOf
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,57 +43,237 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MyApp() {
-    val navHostController = rememberNavController( )
+     val navHostController = rememberNavController( )
 
-    NavHost(navController = navHostController, startDestination = "Consulta"){
-        composable(route="Consulta"){
-            ConsultaScreen()
+    NavHost(navController = navHostController, startDestination = Screen.ConsultaPersona.route){
+        composable(route = Screen.ConsultaPersona.route){
+            ConsultaPersona(clickRegistro = {navHostController.navigate(Screen.RegistroPersona.route)}, ClickConsultaOcup = {navHostController.navigate(Screen.ConsultaOcupaciones.route)})
         }
-        composable(route="Registro"){
-            RegistroScreen()
+        composable(route = Screen.RegistroPersona.route){
+            RegistroPersona()
+        }
+        composable(Screen.ConsultaOcupaciones.route){
+            ConsultaOcupaciones(clickRegistroOcup = {navHostController.navigate(Screen.RegistroOcupaciones.route)})
+        }
+        composable(route = Screen.RegistroOcupaciones.route){
+            RegistroOcupaciones()
         }
     }
 }
 
 @Composable
-fun RegistroScreen(){
+fun RegistroPersona(){
+
+    val scaffoldState = rememberScaffoldState()
     var ocup by rememberSaveable() {
         mutableStateOf("")
     }
-    Column(modifier = Modifier.padding(8.dp)){
-        OutlinedTextField(
-            label = {
-                    Text(text = "Ocupación")
-            },
-            leadingIcon = {
-                          Icon(imageVector = Icons.Default.Person, contentDescription = null)
-            },
-            value = ocup,
-            onValueChange = {ocup = it},
-            modifier = Modifier.fillMaxWidth()
-        )
 
-        OutlinedButton(onClick = { /*TODO*/ }) {
-            Text(text = "Guardar")
+    Scaffold(
+        topBar = {
+            TopAppBar(title = { Text(text = "Registro de Personas")})
+        },
+
+        scaffoldState = scaffoldState
+
+    ) {
+        Column(modifier = Modifier.padding(8.dp)){
+            OutlinedTextField(
+                label = {
+                    Text(text = "PersonaId")
+                },
+                leadingIcon = {
+                    Icon(imageVector = Icons.Default.FormatListNumbered, contentDescription = null)
+                },
+                value = ocup,
+                onValueChange = {ocup = it},
+                modifier = Modifier.fillMaxWidth()
+            )
+            OutlinedTextField(
+                label = {
+                    Text(text = "Nombres")
+                },
+                leadingIcon = {
+                    Icon(imageVector = Icons.Default.Person, contentDescription = null)
+                },
+                value = ocup,
+                onValueChange = {ocup = it},
+                modifier = Modifier.fillMaxWidth()
+            )
+            OutlinedTextField(
+                label = {
+                    Text(text = "Email")
+                },
+                leadingIcon = {
+                    Icon(imageVector = Icons.Default.Email, contentDescription = null)
+                },
+                value = ocup,
+                onValueChange = {ocup = it},
+                modifier = Modifier.fillMaxWidth()
+            )
+            OutlinedTextField(
+                label = {
+                    Text(text = "Salario")
+                },
+                leadingIcon = {
+                    Icon(imageVector = Icons.Default.MonetizationOn, contentDescription = null)
+                },
+                value = ocup,
+                onValueChange = {ocup = it},
+                modifier = Modifier.fillMaxWidth()
+            )
+
+
+            Row() {
+                OutlinedButton(
+                    onClick = {
+
+                    },
+                    modifier = Modifier.padding(8.dp)
+                ) {
+
+                    Icon(imageVector = Icons.Default.NewLabel, contentDescription =null )
+                    Text(text = "Nuevo")
+
+                }
+
+                OutlinedButton(
+                    onClick = {
+
+                    },
+                    modifier = Modifier.padding(8.dp)
+                ) {
+                    Icon(imageVector = Icons.Default.Save, contentDescription =null )
+                    Text(text = "Guardar")
+                }
+                OutlinedButton(
+                    onClick = {
+
+                    },
+                    modifier = Modifier.padding(8.dp)
+                ) {
+                    Icon(imageVector = Icons.Default.Delete, contentDescription =null )
+                    Text(text = "Eliminar")
+                }
+            }
         }
     }
 }
 
 @Composable
-fun ConsultaScreen(){
-    Column(modifier = Modifier.padding(8.dp)) {
+fun RegistroOcupaciones(){
 
-        Button(onClick = { /*TODO*/ }) {
-            Text("Nuevo")
-        }
-        val lista = listOf("Vismar", "Nachely", "Kelvin")
+    val scaffoldState = rememberScaffoldState()
+    var ocup by rememberSaveable() {
+        mutableStateOf("")
+    }
 
-        LazyColumn(modifier = Modifier.fillMaxWidth()){
-            items(lista) { nombre ->
-                RowNombre(nombre)
+    Scaffold(
+        topBar = {
+            TopAppBar(title = { Text(text = "Registro de Ocupaciones")})
+        },
+        scaffoldState = scaffoldState
+    ) {
+        Column(modifier = Modifier.padding(8.dp)){
+            OutlinedTextField(
+                label = {
+                    Text(text = "OcupacionId")
+                },
+                leadingIcon = {
+                    Icon(imageVector = Icons.Default.FormatListNumbered, contentDescription = null)
+                },
+                value = ocup,
+                onValueChange = {ocup = it},
+                modifier = Modifier.fillMaxWidth()
+            )
+            OutlinedTextField(
+                label = {
+                    Text(text = "Nombre Ocupacion")
+                },
+                leadingIcon = {
+                    Icon(imageVector = Icons.Default.Work, contentDescription = null)
+                },
+                value = ocup,
+                onValueChange = {ocup = it},
+                modifier = Modifier.fillMaxWidth()
+            )
+
+
+            Row() {
+                OutlinedButton(
+                    onClick = {
+
+                    },
+                    modifier = Modifier.padding(8.dp)
+                ) {
+                    Icon(imageVector = Icons.Default.NewLabel, contentDescription =null )
+                    Text(text = "Nuevo")
+                }
+                OutlinedButton(
+                    onClick = {
+
+                    },
+                    modifier = Modifier.padding(8.dp)
+                ) {
+                    Icon(imageVector = Icons.Default.Save, contentDescription =null )
+                    Text(text = "Guardar")
+                }
+                OutlinedButton(
+                    onClick = {
+
+                    },
+                    modifier = Modifier.padding(8.dp)
+                ) {
+                    Icon(imageVector = Icons.Default.Delete, contentDescription =null )
+                    Text(text = "Eliminar")
+                }
             }
         }
     }
+}
+
+@Composable
+fun ConsultaPersona(clickRegistro:()->Unit, ClickConsultaOcup:()->Unit){
+
+    val scaffoldState = rememberScaffoldState()
+
+    Scaffold(
+        topBar = {
+            TopAppBar(title = { Text(text = "Listado de Personas")})
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                    clickRegistro()
+                },
+                backgroundColor = MaterialTheme.colors.primary
+            ) {
+                Icon(imageVector = Icons.Default.Person , contentDescription =null )
+            }
+        },
+        scaffoldState = scaffoldState
+    ) {
+        Column(modifier = Modifier.padding(8.dp)) {
+
+            OutlinedButton(
+                onClick = {
+                    ClickConsultaOcup()
+                }) {
+                Icon(imageVector = Icons.Default.Save, contentDescription =null )
+                Text(text = "Ocupaciones")
+            }
+
+
+            val lista = listOf("Enel", "Vismar", "Nachely", "Kelvin", "Felix", "Reny")
+
+            LazyColumn(modifier = Modifier.fillMaxWidth()){
+                items(lista) { nombre ->
+                    RowNombre(nombre)
+                }
+            }
+        }
+    }
+
 }
 
 @Composable
@@ -103,10 +285,55 @@ fun RowNombre(nombre: String){
     }
 }
 
+@Composable
+fun RowOcupaciones(nombre: String){
+    Row(){
+        Text("Ocupacion : $nombre")
+
+
+    }
+}
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun DefaultPreview() {
     Tarea3ComposeTheme {
         MyApp()
+    }
+}
+
+
+@Composable
+fun ConsultaOcupaciones(clickRegistroOcup:()->Unit){
+
+   val scaffoldState = rememberScaffoldState()
+
+    Scaffold(
+        topBar = {
+            TopAppBar(title = { Text(text = "Listado de Ocupaciones")})
+       },
+       floatingActionButton = {
+            FloatingActionButton(
+              onClick = {
+                   clickRegistroOcup()
+                },
+               backgroundColor = MaterialTheme.colors.primary
+           ) {
+                Icon(imageVector = Icons.Default.Work , contentDescription =null )
+            }
+        },
+        scaffoldState = scaffoldState
+    ) {
+        Column(modifier = Modifier.padding(8.dp)) {
+
+
+                val lista = listOf("Ingeniero", "Administrador", "Contable", "Licenciado")
+
+                LazyColumn(modifier = Modifier.fillMaxWidth()) {
+                    items(lista) { ocupacion ->
+                        RowOcupaciones(ocupacion)
+                }
+            }
+        }
     }
 }
