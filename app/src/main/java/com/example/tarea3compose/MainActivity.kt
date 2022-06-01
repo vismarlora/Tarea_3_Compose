@@ -41,6 +41,60 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun MenuOcupacion() {
+    val types = listOf("Ingeniero", "Administrador", "Contable", "Licenciado")
+    val default = 0
+
+    var expanded by remember { mutableStateOf(false) }
+    var selectedType by remember { mutableStateOf(types[default]) }
+
+    ExposedDropdownMenuBox(
+        expanded = expanded,
+        onExpandedChange = {
+            expanded = !expanded
+        },
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        OutlinedTextField(
+            readOnly = true,
+            value = selectedType,
+            onValueChange = { },
+
+            label = { Text(text="Ocupacion") },
+            trailingIcon = {
+                ExposedDropdownMenuDefaults.TrailingIcon(
+                    expanded = expanded
+                )
+            },
+            colors = ExposedDropdownMenuDefaults.textFieldColors()
+        )
+        ExposedDropdownMenu(
+            expanded = expanded,
+            onDismissRequest = {
+                expanded = false
+            }
+        ) {
+            types.forEach { selectionOption ->
+                DropdownMenuItem(
+                    onClick = {
+                        selectedType = selectionOption
+                        expanded = false
+                    }
+                ) {
+                    Text(text = selectionOption)
+                }
+            }
+        }
+    }
+}
+
+
+
+
 @Composable
 fun MyApp() {
      val navHostController = rememberNavController( )
@@ -111,6 +165,14 @@ fun RegistroPersona(){
                 onValueChange = {ocup = it},
                 modifier = Modifier.fillMaxWidth()
             )
+
+
+
+            MenuOcupacion()
+
+
+
+
             OutlinedTextField(
                 label = {
                     Text(text = "Salario")
